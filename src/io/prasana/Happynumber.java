@@ -1,21 +1,36 @@
-package io.prasana;
+import java.util.HashSet;
 
 public class Happynumber {
 
-    public boolean isHappyNumber(int x) {
-        int happy = 0, split, power;
+    public static void main(String[] args) {
+        int n = 19;   // Change this value to test
+        System.out.println(isHappy(n));
+    }
 
-        while (x != 1 && x != 4) {
-            happy = 0;
-            while (x > 0) {
-                split = x % 10;
-                x = x / 10;
-                power = split * split;
-                happy = happy + power;
+    public static boolean isHappy(int n) {
+        HashSet<Integer> seen = new HashSet<>();
+
+        while (n != 1) {
+            if (seen.contains(n)) {
+                return false;  // cycle detected
             }
-            x = happy;
+
+            seen.add(n);
+            n = getNext(n);
         }
 
-        return x == 1;
+        return true;
+    }
+
+    private static int getNext(int n) {
+        int sum = 0;
+
+        while (n != 0) {
+            int digit = n % 10;
+            sum += digit * digit;
+            n /= 10;
+        }
+
+        return sum;
     }
 }
